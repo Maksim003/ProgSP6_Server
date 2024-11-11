@@ -1,0 +1,78 @@
+@startuml
+class com.company.progsp6_server.Database.Config {
+# String dbHost
+# String dbPort
+# String dbUser
+# String dbPass
+# String dbName
+}
+class com.company.progsp6_server.Model.Request {
+- String request
+- ArrayList<Document> documents
++ String getRequest()
++ void setRequest(String)
++ ArrayList<Document> getDocuments()
++ void setDocuments(ArrayList<Document>)
+}
+class com.company.progsp6_server.MonoThreadClientHandler {
+~ Socket client
+~ MainModel mainModel
++ void run()
++ ArrayList<Document> sendDoc(Request)
+}
+class com.company.progsp6_server.Model.Answer {
+- String answer
+- ArrayList<Document> documents
++ String getAnswer()
++ void setAnswer(String)
++ ArrayList<Document> getDocuments()
++ void setDocuments(ArrayList<Document>)
+}
+class com.company.progsp6_server.Model.MainModel {
+~ Database db
++ void connectToDb()
++ void addDocument(Document)
++ void deleteDocument(Document)
++ void changeDataDocument(Document)
++ ArrayList<Document> getTableViewDocuments()
+}
+class com.company.progsp6_server.Model.Document {
+- int id
+- String name
+- int numberOfDoc
+- String category
+- String type
+- String status
+- LocalDate date
++ int getId()
++ void setId(int)
++ String getName()
++ void setName(String)
++ int getNumberOfDoc()
++ void setNumberOfDoc(int)
++ String getCategory()
++ void setCategory(String)
++ String getType()
++ void setType(String)
++ String getStatus()
++ void setStatus(String)
++ LocalDate getDate()
++ void setDate(LocalDate)
+}
+class com.company.progsp6_server.Server {
++ {static} MainModel mainModel
++ {static} void main(String[])
+}
+class com.company.progsp6_server.Database.Database {
+~ Connection dbConnection
+~ String connectionString
+~ Statement statement
++ void createDbConnection()
++ ResultSet getData(String)
++ void updateData(String)
+}
+
+
+com.company.progsp6_server.Thread <|-- com.company.progsp6_server.MonoThreadClientHandler
+com.company.progsp6_server.Database.Config <|-- com.company.progsp6_server.Database.Database
+@enduml
